@@ -1,7 +1,17 @@
 {
-    "IsError_filter": {
-        "description": "是否屏蔽错误信息",
+    "Iserror_notice": {
+        "description": "是否启用错误信息屏蔽与通知",
         "type": "bool",
         "default": true
+    },
+    "notify_admin_ids": {
+        "description": "接收错误通知的指定管理员ID列表（QQ号），留空则不发送通知给任何人。例如：[\"123456789\", \"987654321\"]",
+        "type": "list",
+        "default": []
+    },
+    "custom_error_keywords": {
+        "description": "自定义错误关键词列表，用于额外匹配错误消息。默认已包含常见错误关键词，此处可添加自定义关键词。例如：[\"超时\", \"连接失败\"]",
+        "type": "list",
+        "default": []
     }
 }
