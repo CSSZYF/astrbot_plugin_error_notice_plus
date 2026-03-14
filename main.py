@@ -22,7 +22,7 @@ class ErrorFilter(Star):
         ])
 
     @filter.on_decorating_result()
-    async def on_decorating_result(self, event: AstrMessageEvent):
+    async def on_decorating_result(self, event: AstrMessageEvent, *args, **kwargs):
         result = event.get_result()
         if not result:  # 检查结果是否存在
             return
