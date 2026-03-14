@@ -15,8 +15,11 @@ class ErrorFilter(Star):
         self.Iserror_notice = self.config.get('Iserror_notice', True)
         # 指定接收通知的管理员ID列表（从插件配置中获取）
         self.notify_admin_ids: list = self.config.get('notify_admin_ids', [])
-        # 自定义错误关键词
-        self.custom_error_keywords: list = self.config.get('custom_error_keywords', [])
+        # 错误关键词列表（默认内置常见错误词汇）
+        self.error_keywords: list = self.config.get('error_keywords', [
+            '请求失败', '错误类型', '错误信息', '调用失败',
+            '处理失败', '描述失败', '获取模型列表失败'
+        ])
 
     @filter.on_decorating_result()
     async def on_decorating_result(self, event: AstrMessageEvent):
@@ -26,16 +29,7 @@ class ErrorFilter(Star):
 
         message_str = result.get_plain_text()
         if self.Iserror_notice and message_str:  # 确保message_str不为空
-            # 默认错误关键词 + 自定义错误关键词
-            error_keywords = [
-                '请求失败', '错误类型', '错误信息', '调用失败',
-                '处理失败', '描述失败', '获取模型列表失败'
-            ]
-            # 合并自定义关键词
-            if self.custom_error_keywords:
-                error_keywords.extend(self.custom_error_keywords)
-
-            if any(keyword in message_str for keyword in error_keywords):
+            if any(keyword in message_str for keyword in self.error_keywords):
                 # 获取事件信息
                 chat_type = "未知类型"
                 chat_id = "未知ID"
