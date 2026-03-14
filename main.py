@@ -7,7 +7,7 @@ from astrbot.api.provider import LLMResponse
 from openai.types.chat.chat_completion import ChatCompletion
 import traceback
 
-@register("error_notice_plus", "CSSZYF", "屏蔽机器人的错误信息回复，并发送给指定管理员。", "1.0.0")
+@register("error_notice_plus", "CSSZYF", "屏蔽机器人的错误信息回复，并发送给指定管理员。", "1.0.1")
 class ErrorFilter(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
